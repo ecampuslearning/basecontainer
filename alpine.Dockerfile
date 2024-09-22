@@ -21,14 +21,14 @@ ARG CREATED
 ARG COMMIT
 ARG VERSION=local
 LABEL \
-    org.opencontainers.image.authors="quentin.mcgaw@gmail.com" \
+    org.opencontainers.image.authors="webmaster@ecampuslearning.com" \
     org.opencontainers.image.created=$CREATED \
     org.opencontainers.image.version=$VERSION \
     org.opencontainers.image.revision=$COMMIT \
-    org.opencontainers.image.url="https://github.com/qdm12/basedevcontainer" \
-    org.opencontainers.image.documentation="https://github.com/qdm12/basedevcontainer" \
-    org.opencontainers.image.source="https://github.com/qdm12/basedevcontainer" \
-    org.opencontainers.image.title="Base Dev container" \
+    org.opencontainers.image.url="https://github.com/ecampuslearning/basecontainer" \
+    org.opencontainers.image.documentation="https://github.com/ecampuslearning/basecontainer" \
+    org.opencontainers.image.source="https://github.com/ecampuslearning/basecontainer" \
+    org.opencontainers.image.title="Base container" \
     org.opencontainers.image.description="Base Alpine development container for Visual Studio Code Remote Containers development"
 ENV BASE_VERSION="${VERSION}-${CREATED}-${COMMIT}"
 

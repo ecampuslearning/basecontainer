@@ -1,0 +1,95 @@
+<h1><%= @hook.name %></h1>
+
+<div class="bg-light bg-gradient p-2 my-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-1">
+        <span>️➡️</span>
+      </div>
+
+      <div class="col">
+        <p>
+          <b>Transhook</b>
+          <a href={Routes.api_hook_url(@socket, :handle_hook, @hook.endpoint)}>Webhook</a>
+        </p>
+      </div>
+
+      <div class="col-1">
+        <span>➡️</span>
+      </div>
+
+      <div class="col">
+        <a href={@hook.dispatcher.url}>Destination</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}>
+    <.live_component
+      module={TranshookWeb.HookLive.FormComponent}
+      id={@hook.id}
+      title={@page_title}
+      action={@live_action}
+      hook={@hook}
+      return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}
+    />
+  </.modal>
+<% end %>
+
+<%= if @live_action in [:sample] do %>
+  <.modal return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}>
+    <.live_component
+      module={TranshookWeb.HookLive.SampleComponent}
+      id={@hook.id}
+      title={@page_title}
+      action={@live_action}
+      hook={@hook}
+      return_to={Routes.admin_hook_show_path(@socket, :show, @hook)}
+    />
+  </.modal>
+<% end %>
+
+<section>
+  <h2>Rule Engine</h2>
+
+  <div class="my-3">
+    <span><%= live_patch "Edit", to: Routes.admin_hook_show_path(@socket, :edit, @hook), class: "btn btn-primary" %></span>
+    <span><%= live_patch "Sample", to: Routes.admin_hook_show_path(@socket, :sample, @hook), class: "btn btn-info" %></span>
+  </div>
+
+  <div class="row gx-2">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Filters</h5>
+          <ul class="list-group">
+            <%= for filter <- @hook.hook_filters do %>
+              <li class="list-group-item">
+                <b><%= filter.query %></b>
+                <%= filter.operator %>
+                <b><%= filter.value %></b>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Template</h5>
+          <pre><%= @hook.dispatcher.payload_template %></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr />
+
+<span>
+  <%= link "Delete", to: "#", phx_click: "delete", phx_value_id: @hook.id, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-sm" %>
+</span>
